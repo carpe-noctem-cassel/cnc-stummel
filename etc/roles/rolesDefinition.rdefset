@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="ASCII"?>
+<alica:RoleDefinitionSet xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:alica="http:///de.uni_kassel.vs.cn" id="1530108759679" name="MISSING_NAME" comment="">
+  <roles id="1530108763872" name="Explorer" comment=""/>
+  <roles id="1530108778233" name="Carrier" comment=""/>
+</alica:RoleDefinitionSet>
