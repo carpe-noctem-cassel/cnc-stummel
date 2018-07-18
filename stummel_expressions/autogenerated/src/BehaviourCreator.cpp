@@ -5,6 +5,8 @@ using namespace std;
 
 #include  "Plans/Explore.h"
 
+#include  "Plans/Joystick.h"
+
 namespace alica
 {
 
@@ -24,6 +26,11 @@ namespace alica
             case 1530109188933:
 
                 return make_shared<Explore>();
+                break;
+
+            case 1531320972586:
+
+                return make_shared<Joystick>();
                 break;
 
             default:

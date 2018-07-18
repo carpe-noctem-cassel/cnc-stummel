@@ -39,6 +39,7 @@ Base::Base(string roleSetName, string masterPlanName, string roleSetDir,
 		wm->setUsingSimulator(true);
 	}
 	wm->setEngine(ae);
+	wm->init();
 	// "clingo", "-W", "no-atom-undefined",  "--number=0", nullptr
 
 	/* TODO Lisa fix symrock

@@ -1,7 +1,6 @@
 #pragma once
 
-#include <cnc_geometry/CNPointAllo.h>
-#include <cnc_geometry/CNPositionAllo.h>
+
 #include <supplementary/InfoBuffer.h>
 #include <supplementary/InformationElement.h>
 
@@ -10,62 +9,63 @@
 
 #define RAW_SENSOR_DEBUG
 
-namespace sensor_msgs
-{
+namespace sensor_msgs {
 ROS_DECLARE_MESSAGE(LaserScan)
+ROS_DECLARE_MESSAGE(Joy)
 }
 
-namespace robot_control
-{
+namespace robot_control {
 ROS_DECLARE_MESSAGE(RobotCommand)
 }
 
-namespace gazebo_msgs
-{
+namespace gazebo_msgs {
 ROS_DECLARE_MESSAGE(ModelStates)
 }
-
-namespace stummel
-{
+namespace alica {
+	class AlicaTime;
+}
+namespace stummel {
 
 class StummelWorldModel;
 
-namespace wm
-{
-class RawSensorData
-{
-  public:
-    RawSensorData(StummelWorldModel *wm);
-    virtual ~RawSensorData();
+namespace wm {
+class RawSensorData {
+public:
+	RawSensorData(StummelWorldModel *wm);
+	virtual ~RawSensorData();
 
-    // methods for processing ROS messages
+	// methods for processing ROS message
+	void processJoyMsg(sensor_msgs::JoyPtr joyMsg);
 //    void processLaserScan(sensor_msgs::LaserScanPtr laserScan);
 //    void processRobotCommand(robot_control::RobotCommand robotCommand);
 //    void processGazeboModelState(gazebo_msgs::ModelStatesPtr modelStates);
 
-    // data access through public buffers
+// data access through public buffers
 
+	const supplementary::InfoBuffer<std::shared_ptr<sensor_msgs::Joy>> *getJoyMsgBuffer();
 //    const supplementary::InfoBuffer<std::shared_ptr<sensor_msgs::LaserScan>> *getLaserScanBuffer();
 //    const supplementary::InfoBuffer<robot_control::RobotCommand> *getRobotCommandBuffer();
 //    const supplementary::InfoBuffer<std::shared_ptr<gazebo_msgs::ModelStates>> *getGazeboModelStatesBuffer();
 
-  private:
-    StummelWorldModel *wm;
-    const supplementary::InfoTime maxValidity = 1000000000;
-    tf::TransformListener listener;
+private:
+	StummelWorldModel *wm;
+	alica::AlicaTime maxValidity;
+	tf::TransformListener listener;
 
-    // common stuff
+	// common stuff
 
-    // real robots only stuff
+	alica::AlicaTime joystickValidityDuration;
+	supplementary::InfoBuffer<std::shared_ptr<sensor_msgs::Joy>> *joyBuffer;
 
-    //sim
+	// real robots only stuff
 
-    supplementary::InfoTime laserScanValidityDuration;
-    supplementary::InfoBuffer<std::shared_ptr<sensor_msgs::LaserScan>> *laserScanBuffer;
+	//sim
 
-
-    supplementary::InfoTime modelStatesValidityDuration;
-    supplementary::InfoBuffer<std::shared_ptr<gazebo_msgs::ModelStates>> *modelStatesBuffer;
+//	supplementary::InfoTime laserScanValidityDuration;
+//	supplementary::InfoBuffer<std::shared_ptr<sensor_msgs::LaserScan>> *laserScanBuffer;
+//
+//	supplementary::InfoTime modelStatesValidityDuration;
+//	supplementary::InfoBuffer<std::shared_ptr<gazebo_msgs::ModelStates>> *modelStatesBuffer;
 };
 } /* namespace wm */
 } /* namespace stummel */
