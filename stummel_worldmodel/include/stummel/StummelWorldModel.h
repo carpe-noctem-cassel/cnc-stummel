@@ -14,6 +14,7 @@ class SystemConfig;
 namespace alica
 {
 class AlicaEngine;
+class AlicaClock;
 }
 
 namespace stummel

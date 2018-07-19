@@ -1,6 +1,6 @@
 #pragma once
 
-#include <supplementary/InfoBuffer.h> /*< needed for InfoTime */
+#include <engine/AlicaClock.h> /*< needed for AlicaTime */
 
 #include <ros/ros.h>
 // TODO: forward declare the message with the ros macro (see MSL WorldModel)
@@ -28,7 +28,7 @@ class Communication
   public:
     Communication(stummel::StummelWorldModel *wm);
     virtual ~Communication();
-    supplementary::InfoTime getTimeLastSimMsgReceived();
+    alica::AlicaTime getTimeLastSimMsgReceived();
 
   private:
     void onJoyMsg(sensor_msgs::JoyPtr joyMsg);
@@ -42,7 +42,7 @@ class Communication
     ros::NodeHandle n;
     ros::AsyncSpinner *spinner;
 
-    supplementary::InfoTime timeLastSimMsgReceived;
+    alica::AlicaTime timeLastSimMsgReceived;
 
     ros::Subscriber gazeboModelStatesSub;
     ros::Subscriber laserScanSub;

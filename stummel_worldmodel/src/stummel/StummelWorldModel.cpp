@@ -1,7 +1,7 @@
 #include "stummel/StummelWorldModel.h"
 
 #include <engine/AlicaEngine.h>
-#include <chrono>
+//#include <chrono>
 
 namespace stummel
 {
@@ -39,7 +39,7 @@ void StummelWorldModel::init()
 
 bool StummelWorldModel::isUsingSimulator()
 {
-	return this->usingSimulator || (this->communication != nullptr && this->communication->getTimeLastSimMsgReceived() > 0);
+	return this->usingSimulator || (this->communication != nullptr && this->communication->getTimeLastSimMsgReceived() > alica::AlicaTime::zero());
 }
 
 void StummelWorldModel::setUsingSimulator(bool usingSimulator)

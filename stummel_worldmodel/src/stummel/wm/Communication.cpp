@@ -14,8 +14,8 @@ namespace wm
 
 Communication::Communication(stummel::StummelWorldModel *wm)
     : wm(wm)
-    , timeLastSimMsgReceived(0)
 {
+	this->timeLastSimMsgReceived = alica::AlicaTime::zero();
     auto sc = wm->getSystemConfig();
     // SET ROS STUFF
     string topic;
@@ -40,13 +40,10 @@ Communication::Communication(stummel::StummelWorldModel *wm)
     //shared topics
 
     topic = (*sc)["StummelWorldModel"]->get<string>("Data.Joystick.Topic", NULL);
-    std::cout << "topic: " << topic << std::endl;
     joystickSub = n.subscribe(topic, 10, &Communication::onJoyMsg, (Communication *)this);
 
 //    topic = (*sc)["StummelWorldModel"]->get<string>("Data.RobotCommand.Topic", NULL);
 //    robotCommandSub = n.subscribe(topic, 10, &Communication::onRobotCommand, (Communication *)this);
-
-
 
 
 
@@ -60,12 +57,12 @@ Communication::~Communication()
     delete spinner;
 }
 
-supplementary::InfoTime Communication::getTimeLastSimMsgReceived()
+alica::AlicaTime Communication::getTimeLastSimMsgReceived()
 {
     return this->timeLastSimMsgReceived;
 }
+
 void Communication::onJoyMsg(sensor_msgs::JoyPtr joyMsg) {
-	std::cout << "IN ON JOY MSG" << std::endl;
 	this->wm->rawSensorData.processJoyMsg(joyMsg);
 }
 

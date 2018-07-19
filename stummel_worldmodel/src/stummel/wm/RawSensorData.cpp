@@ -16,8 +16,6 @@ using supplementary::InformationElement;
 using supplementary::InfoBuffer;
 using std::make_shared;
 using std::shared_ptr;
-using std::cout;
-using std::endl;
 
 namespace stummel {
 namespace wm {
@@ -44,7 +42,6 @@ void RawSensorData::processJoyMsg(sensor_msgs::JoyPtr joyMsg)
 {
     auto joyPtr = std::shared_ptr<sensor_msgs::Joy>(joyMsg.get(), [joyMsg](sensor_msgs::Joy *) mutable { joyMsg.reset(); });
     auto joyPtrInfo = std::make_shared<InformationElement<std::shared_ptr<sensor_msgs::Joy>>>(joyPtr, wm->getTime(), this->joystickValidityDuration, 1.0);
-    cout << "ADDING JOY MSG!" << endl;
     joyBuffer->add(joyPtrInfo);
 }
 //
