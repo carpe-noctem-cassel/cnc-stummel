@@ -1,7 +1,6 @@
 #include "stummel/StummelWorldModel.h"
 
 #include <engine/AlicaEngine.h>
-//#include <chrono>
 
 namespace stummel
 {

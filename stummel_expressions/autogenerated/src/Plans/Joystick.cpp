@@ -20,7 +20,7 @@ void Joystick::run(void* msg) {
 	/*PROTECTED REGION ID(run1531320894670) ENABLED START*/ //Add additional options here
 
 
-	nonstd::optional<shared_ptr<sensor_msgs::Joy>> joyContent =
+	nonstd::optional<sensor_msgs::Joy> joyContent =
 			this->wm->rawSensorData.getJoyMsgBuffer()->getLastValidContent();
 	geometry_msgs::Twist twistMsg;
 
@@ -35,7 +35,7 @@ void Joystick::run(void* msg) {
 	auto joyMsg = *joyContent;
 
 	// lb button => dead-man
-	if (joyMsg->buttons.at(4) == 0) {
+	if (joyMsg.buttons.at(4) == 0) {
 		twistMsg.linear.x = 0;
 		twistMsg.angular.z = 0;
 		send(twistMsg);
@@ -44,12 +44,12 @@ void Joystick::run(void* msg) {
 
 	//maxRot: ~100deg/s at input value of ~1.65 (140deg/s according to manual)
 	// rotation: axes[0], left positive, right negative [-1,1]
-	twistMsg.angular.z = joyMsg->axes.at(0) * 1.65;
+	twistMsg.angular.z = joyMsg.axes.at(0) * 1.65;
 
 
 	//maxVel: 1 m/s (really? 0.7m/s according to manual)
 	//velX: axes[1], up positive, down negative [-1,1]
-	twistMsg.linear.x = joyMsg->axes.at(1);
+	twistMsg.linear.x = joyMsg.axes.at(1);
 
 
 	send(twistMsg);
