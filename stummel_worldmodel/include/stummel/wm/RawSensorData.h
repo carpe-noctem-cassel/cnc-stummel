@@ -9,16 +9,16 @@
 
 #define RAW_SENSOR_DEBUG
 
-namespace std_msgs {
-ROS_DECLARE_MESSAGE(Float64)
+namespace p2os_msgs {
+ROS_DECLARE_MESSAGE(BatteryState)
 }
 namespace sensor_msgs {
 ROS_DECLARE_MESSAGE(LaserScan)
 ROS_DECLARE_MESSAGE(Joy)
 }
 
-namespace geometry_msgs {
-ROS_DECLARE_MESSAGE(Pose)
+namespace nav_msgs {
+ROS_DECLARE_MESSAGE(Odometry)
 }
 
 namespace robot_control {
@@ -43,18 +43,18 @@ public:
 
 	// methods for processing ROS message
 	void processJoyMsg(sensor_msgs::JoyPtr joyMsg);
-	void processOdomMsg(geometry_msgs::PosePtr odomMsg);
+	void processOdomMsg(nav_msgs::OdometryPtr odomMsg);
     void processGazeboModelState(gazebo_msgs::ModelStatesPtr modelStates);
-    void processBatteryVoltageMsg(std_msgs::Float64Ptr batteryVoltageMsg);
+    void processBatteryVoltageMsg(p2os_msgs::BatteryStatePtr batteryVoltageMsg);
 //    void processLaserScan(sensor_msgs::LaserScanPtr laserScan);
 //    void processRobotCommand(robot_control::RobotCommand robotCommand);
 
 // data access through public buffers
 
 	const supplementary::InfoBuffer<sensor_msgs::Joy> *getJoyMsgBuffer();
-	const supplementary::InfoBuffer<geometry_msgs::Pose> *getOdomMsgBuffer();
+	const supplementary::InfoBuffer<nav_msgs::Odometry> *getOdomMsgBuffer();
     const supplementary::InfoBuffer<gazebo_msgs::ModelStates> *getGazeboModelStatesBuffer();
-    const supplementary::InfoBuffer<std_msgs::Float64> *getBatteryVoltageBuffer();
+    const supplementary::InfoBuffer<p2os_msgs::BatteryState> *getBatteryVoltageBuffer();
 //    const supplementary::InfoBuffer<std::shared_ptr<sensor_msgs::LaserScan>> *getLaserScanBuffer();
 //    const supplementary::InfoBuffer<robot_control::RobotCommand> *getRobotCommandBuffer();
 
@@ -68,7 +68,7 @@ private:
 	alica::AlicaTime joystickValidityDuration;
 	alica::AlicaTime odomPositionValidityDuration;
 	supplementary::InfoBuffer<sensor_msgs::Joy> *joyBuffer;
-	supplementary::InfoBuffer<geometry_msgs::Pose> *odomBuffer;
+	supplementary::InfoBuffer<nav_msgs::Odometry> *odomBuffer;
 
 	//	supplementary::InfoTime laserScanValidityDuration;
 	//	supplementary::InfoBuffer<std::shared_ptr<sensor_msgs::LaserScan>> *laserScanBuffer;
@@ -76,7 +76,7 @@ private:
 	// real robots only stuff
 
 	alica::AlicaTime batteryVoltageValidityDuration;
-	supplementary::InfoBuffer<std_msgs::Float64> *batteryVoltageBuffer;
+	supplementary::InfoBuffer<p2os_msgs::BatteryState> *batteryVoltageBuffer;
 
 	//sim
 

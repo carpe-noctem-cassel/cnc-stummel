@@ -29,11 +29,11 @@ RawSensorData::RawSensorData(StummelWorldModel *wm) {
     this->odomPositionValidityDuration = alica::AlicaTime::nanoseconds((*sc)["StummelWorldModel"]->get<int>("Data.OdomPosition.ValidityDuration", NULL));
 
     this->joyBuffer = new InfoBuffer<sensor_msgs::Joy>((*sc)["StummelWorldModel"]->get<int>("Data.Joystick.BufferLength", NULL));
-    this->odomBuffer = new InfoBuffer<geometry_msgs::Pose>((*sc)["StummelWorldModel"]->get<int>("Data.OdomPosition.BufferLength", NULL));
+    this->odomBuffer = new InfoBuffer<nav_msgs::Odometry>((*sc)["StummelWorldModel"]->get<int>("Data.OdomPosition.BufferLength", NULL));
 
 	// real robot data buffers
     this->batteryVoltageValidityDuration = alica::AlicaTime::nanoseconds((*sc)["StummelWorldModel"]->get<int>("Data.BatteryVoltage.ValidityDuration", NULL));
-    this->batteryVoltageBuffer = new InfoBuffer<std_msgs::Float64>((*sc)["StummelWorldModel"]->get<int>("Data.BatteryVoltage.BufferLength", NULL));
+    this->batteryVoltageBuffer = new InfoBuffer<p2os_msgs::BatteryState>((*sc)["StummelWorldModel"]->get<int>("Data.BatteryVoltage.BufferLength", NULL));
 
 	// simulation data buffers
     this->modelStatesValidityDuration = alica::AlicaTime::nanoseconds((*sc)["StummelWorldModel"]->get<int>("Data.OdomPosition.ValidityDuration", NULL));
@@ -51,9 +51,9 @@ void RawSensorData::processJoyMsg(sensor_msgs::JoyPtr joyMsg)
     joyBuffer->add(joyInfo);
 }
 
-void RawSensorData::processOdomMsg(geometry_msgs::PosePtr odomMsg)
+void RawSensorData::processOdomMsg(nav_msgs::OdometryPtr odomMsg)
 {
-    auto odomInfo = std::make_shared<InformationElement<geometry_msgs::Pose>>(*(odomMsg.get()), wm->getTime(), this->odomPositionValidityDuration, 1.0);
+    auto odomInfo = std::make_shared<InformationElement<nav_msgs::Odometry>>(*(odomMsg.get()), wm->getTime(), this->odomPositionValidityDuration, 1.0);
     odomBuffer->add(odomInfo);
 }
 
@@ -64,9 +64,9 @@ void RawSensorData::processGazeboModelState(gazebo_msgs::ModelStatesPtr modelSta
     modelStatesBuffer->add(modelStatesInfo);
 }
 
-void RawSensorData::processBatteryVoltageMsg(std_msgs::Float64Ptr batteryVoltageMsg)
+void RawSensorData::processBatteryVoltageMsg(p2os_msgs::BatteryStatePtr batteryVoltageMsg)
 {
-    auto batteryInfo = std::make_shared<InformationElement<std_msgs::Float64>>(*(batteryVoltageMsg.get()), wm->getTime(), this->joystickValidityDuration, 1.0);
+    auto batteryInfo = std::make_shared<InformationElement<p2os_msgs::BatteryState>>(*(batteryVoltageMsg.get()), wm->getTime(), this->joystickValidityDuration, 1.0);
     batteryVoltageBuffer->add(batteryInfo);
 }
 
@@ -85,12 +85,12 @@ const supplementary::InfoBuffer<sensor_msgs::Joy> *RawSensorData::getJoyMsgBuffe
 	return this->joyBuffer;
 }
 
-const supplementary::InfoBuffer<geometry_msgs::Pose> *RawSensorData::getOdomMsgBuffer()
+const supplementary::InfoBuffer<nav_msgs::Odometry> *RawSensorData::getOdomMsgBuffer()
 {
 	return this->odomBuffer;
 }
 
-const supplementary::InfoBuffer<std_msgs::Float64> *RawSensorData::getBatteryVoltageBuffer()
+const supplementary::InfoBuffer<p2os_msgs::BatteryState> *RawSensorData::getBatteryVoltageBuffer()
 {
 	return this->batteryVoltageBuffer;
 }

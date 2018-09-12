@@ -71,7 +71,7 @@ void Communication::onJoyMsg(sensor_msgs::JoyPtr joyMsg) {
 	this->wm->rawSensorData.processJoyMsg(joyMsg);
 }
 
-void Communication::onOdomMsg(geometry_msgs::PosePtr odomMsg) {
+void Communication::onOdomMsg(nav_msgs::OdometryPtr odomMsg) {
 	this->wm->rawSensorData.processOdomMsg(odomMsg);
 }
 void Communication::onGazeboModelStates(
@@ -79,8 +79,7 @@ void Communication::onGazeboModelStates(
 	this->wm->rawSensorData.processGazeboModelState(modelStates);
 }
 
-void Communication::onBatteryVoltage(
-		std_msgs::Float64Ptr batteryVoltageMsg) {
+void Communication::onBatteryVoltage(p2os_msgs::BatteryStatePtr batteryVoltageMsg) {
 	this->wm->rawSensorData.processBatteryVoltageMsg(batteryVoltageMsg);
 }
 //void Communication::onLaserScan(sensor_msgs::LaserScanPtr laserScan)

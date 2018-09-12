@@ -7,12 +7,12 @@ set(CMAKE_CXX_FLAGS "-std=c++11 ${CMAKE_CXX_FLAGS}")
 ## Enable exception handling for segfaults using SigFault.h
 set(CMAKE_CXX_FLAGS "-rdynamic -fnon-call-exceptions -ggdb ${CMAKE_CXX_FLAGS}")
 
-find_package(catkin REQUIRED COMPONENTS cnc_geometry system_config event_handling alica_engine robot_control tf world_model)
+find_package(catkin REQUIRED COMPONENTS cnc_geometry system_config event_handling alica_engine robot_control tf world_model p2os_msgs)
 
 catkin_package(
   INCLUDE_DIRS include
   LIBRARIES stummel_worldmodel
-  CATKIN_DEPENDS cnc_geometry system_config event_handling robot_control world_model
+  CATKIN_DEPENDS cnc_geometry system_config event_handling robot_control world_model p2os_msgs
 )
  
 include_directories(include ${catkin_INCLUDE_DIRS})

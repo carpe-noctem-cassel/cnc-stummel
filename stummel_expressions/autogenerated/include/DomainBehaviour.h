@@ -28,8 +28,8 @@ namespace alica
         int ownID;
 
 
-        ros::Publisher ariaPub;
-        std::string ariaTopic;
+        ros::Publisher twistPub;
+        std::string motionTopic;
 
     };
 } /* namespace alica */
