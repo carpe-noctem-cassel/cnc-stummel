@@ -25,7 +25,7 @@ Base::Base(string roleSetName, string masterPlanName, string roleSetDir,
 	ae = new alica::AlicaEngine(
 			new supplementary::AgentIDManager(
 					new supplementary::AgentIDFactory()), roleSetName,
-			masterPlanName, roleSetDir, false);
+			masterPlanName, false);
 	bc = new alica::BehaviourCreator();
 	cc = new alica::ConditionCreator();
 	uc = new alica::UtilityFunctionCreator();
