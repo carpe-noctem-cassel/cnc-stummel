@@ -6,15 +6,15 @@ set -e
 step_count=8
 current_step=0
 root_taskfile=.root_done
-ubuntu_packages='git vim gitk meld bison re2c libode-dev gnuplot-qt libxv-dev libtbb-dev libcgal-demo libcgal-dev xsdcxx libxerces-c-dev freeglut3-dev liblua5.1-0-dev scons myrepos openjdk-8-jdk'
+ubuntu_packages='git vim gitk meld bison re2c libode-dev gnuplot-qt libxv-dev libtbb-dev libcgal-demo libcgal-dev xsdcxx libxerces-c-dev freeglut3-dev liblua5.1-0-dev scons myrepos openjdk-8-jdk libpcap-dev net-tools'
 ubuntu_distro=bionic
 ros_distro=melodic
-ros_packages="ros-${ros_distro}-perception ros-${ros_distro}-p2os-msgs ros-${ros_distro}-desktop-full ros-${ros_distro}-qt-gui-core python-rosinstall ros-${ros_distro}-moveit-core ros-${ros_distro}-moveit-ros-planning ros-${ros_distro}-moveit-ros-planning-interface ros-${ros_distro}-sound-play ros-${ros_distro}-urg-node python-catkin-tools"
+ros_packages="ros-${ros_distro}-perception ros-${ros_distro}-p2os-msgs ros-${ros_distro}-desktop-full ros-${ros_distro}-qt-gui-core python-rosinstall ros-${ros_distro}-moveit-core ros-${ros_distro}-moveit-ros-planning ros-${ros_distro}-moveit-ros-planning-interface ros-${ros_distro}-sound-play ros-${ros_distro}-urg-node python-catkin-tools ros-${ros_distro}-map-server ros-${ros_distro}-p2os-msgs"
 workspace_path="$HOME/stummelws"
 workspace_src="${workspace_path}/src"
 ros_setup_file="/opt/ros/${ros_distro}/setup.sh"
 github_url='git@github.com:carpe-noctem-cassel/'
-repos='alica alica-plan-designer clingo supplementary cnc-stummel cnc-stummeldriver kinova-ros'
+repos='alica alica-plan-designer clingo supplementary cnc-stummel cnc-stummeldriver kinova-ros p2os'
 
 # functions
 msg() {
@@ -102,6 +102,10 @@ rosdep_init() {
 	[ -f /etc/ros/rosdep/sources.list.d/20-default.list ] || rosdep init
 }
 
+linklocale() {
+    ln -s /usr/include/locale.h /usr/include/xlocale.h
+}
+
 rosdep_update() {
 	rosdep update
 	rosdep fix-permissions
@@ -166,6 +170,10 @@ clone_git_repos() {
 			msg "$r already exists!"
 		fi
 	done
+
+	msg "Cloning additional, hardcoded repos"
+
+	git clone https://bitbucket.org/DataspeedInc/velodyne_simulator.git "${workspace_src}/velodyne_simulator"
 }
 
 setup_mr() {
@@ -212,6 +220,7 @@ root_tasks() {
 	do_task ros_setup "Setup ros dependency"
 	do_task install_packages "Install ros and development packages"
 	do_task rosdep_init "Running: rosdep init"
+	do_task linklocale "Linking /usr/include/xlocale.h"
 }
 
 # This portion of the script can be run as a normal user
