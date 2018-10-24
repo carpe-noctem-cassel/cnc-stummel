@@ -3,7 +3,7 @@
 set -e
 
 # vars
-step_count=8
+step_count=11
 current_step=0
 root_taskfile=.root_done
 ubuntu_packages='git vim gitk meld bison re2c libode-dev gnuplot-qt libxv-dev libtbb-dev libcgal-demo libcgal-dev xsdcxx libxerces-c-dev freeglut3-dev liblua5.1-0-dev scons myrepos openjdk-8-jdk libpcap-dev net-tools'
@@ -103,7 +103,7 @@ rosdep_init() {
 }
 
 linklocale() {
-    ln -s /usr/include/locale.h /usr/include/xlocale.h
+    ln -fs /usr/include/locale.h /usr/include/xlocale.h
 }
 
 rosdep_update() {
@@ -171,9 +171,17 @@ clone_git_repos() {
 		fi
 	done
 
+	msg "Checking out stummel branch for supplementary"
+
+	( cd stummelws/src/supplementary/ ; git checkout Stummel-dev )
+
 	msg "Cloning additional, hardcoded repos"
 
 	git clone https://bitbucket.org/DataspeedInc/velodyne_simulator.git "${workspace_src}/velodyne_simulator"
+}
+
+catkin_build() {
+    ( cd "${workspace_src}" ; catkin build )
 }
 
 setup_mr() {
@@ -191,7 +199,7 @@ append_bashrc() {
 
 setup_bashrc() {
 	# repo that contains domain specific configuration like etc
-	etc_repo='cnc-turtlebots'
+	etc_repo='cnc-stummel'
 
 	append_bashrc "source /opt/ros/${ros_distro}/setup.bash"
 	append_bashrc "source ${workspace_path}/devel/setup.bash"
@@ -211,6 +219,8 @@ setup_bashrc() {
 
 	# For eclipse users
 	append_bashrc "alias eclipse='~/eclipse/eclipse'"
+	append_bashrc "export GAZEBO_MODEL_PATH=\"\${GAZEBO_MODEL_PATH}:\$DOMAIN_FOLDER/../cnc-stummeldriver/models:\$GAZEBO_MODEL_PATH\""
+	append_bashrc "export GAZEBO_PLUGIN_PATH=\"\$DOMAIN_FOLDER/../../build:\$GAZEBO_PLUGIN_PATH\""
 }
 
 # This portion of the script has to be run as root
@@ -231,6 +241,7 @@ user_tasks() {
 	do_task clone_git_repos "Cloning git repositories"
 	do_task setup_mr "Registering repositories for mr"
 	do_task setup_bashrc "Configure ~/.bashrc for you"
+	do_task catkin_build "Building workspace"
 }
 
 # "main"
