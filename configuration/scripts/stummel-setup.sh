@@ -173,7 +173,7 @@ clone_git_repos() {
 
 	msg "Checking out stummel branch for supplementary"
 
-	( cd stummelws/src/supplementary/ ; git checkout Stummel-dev )
+	( cd ${workspace_src}/supplementary/ ; git checkout Stummel-dev )
 
 	msg "Cloning additional, hardcoded repos"
 
@@ -181,7 +181,7 @@ clone_git_repos() {
 }
 
 catkin_build() {
-    ( cd "${workspace_src}" ; catkin build )
+    ( cd "${workspace_path}" ; catkin build )
 }
 
 setup_mr() {
@@ -207,7 +207,7 @@ setup_bashrc() {
 	append_bashrc "# The next two lines determine the application domain for ALICA (Team-Modelling software)"
 	append_bashrc "export DOMAIN_FOLDER=\"${workspace_src}/${etc_repo}\""
 	append_bashrc "export DOMAIN_CONFIG_FOLDER=\"${workspace_src}/${etc_repo}/etc\""
-	
+
 	append_bashrc "# Fancy prompt that also shows the current branch"
 	append_bashrc "export PS1='\[\033[01;32m\]\u@\h\[\033[01;34m\] \w \[\033[01;31m\]\$(__git_ps1 \"[%s]\")\[\033[01;34m\]\$\[\033[00m\] '"
 
