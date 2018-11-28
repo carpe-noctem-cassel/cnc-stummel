@@ -14,7 +14,8 @@ workspace_path="$HOME/stummelws"
 workspace_src="${workspace_path}/src"
 ros_setup_file="/opt/ros/${ros_distro}/setup.sh"
 github_url='git@github.com:dasys-lab/'
-repos='alica alica-plan-designer clingo supplementary cnc-stummel cnc-stummeldriver kinova-ros p2os'
+repos='alica alica-plan-designer clingo aspsuite alica-supplementary essentials cnc-stummel cnc-stummeldriver kinova-ros p2os'
+
 
 # functions
 msg() {
