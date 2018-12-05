@@ -189,6 +189,7 @@ catkin_build() {
     ( cd "${workspace_path}" ; catkin build )
 }
 
+# TODO check if this step can be skipped. currently, clingo will always be checked out, built and installed, ignoring previous installations.
 setup_clingo() {
     cd
     su cn -c "git clone https://github.com/potassco/clingo.git"
