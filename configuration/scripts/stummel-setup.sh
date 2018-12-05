@@ -175,8 +175,8 @@ clone_git_repos() {
     msg "Checking out newPD branch for alica"
 	( cd ${workspace_src}/alica/ ; git checkout newPD )
 
-    msg "Checking out ttb-dev branch for essentials"
-	( cd ${workspace_src}/essentials/ ; git checkout ttb-dev )
+    msg "Checking out ttb_dev branch for essentials"
+	( cd ${workspace_src}/essentials/ ; git checkout ttb_dev )
 
 	msg "Cloning additional, hardcoded repos"
 
