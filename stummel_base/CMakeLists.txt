@@ -23,11 +23,9 @@ find_package(catkin REQUIRED COMPONENTS
   stummel_worldmodel
   robot_control 
   tf 
-  
-  #TODO Lisa fix symrock
-  #asp_commons
-  #asp_solver_wrapper
-  #asp_solver
+  asp_commons
+  asp_solver_wrapper
+  asp_solver
 )
 
 ###################################
@@ -42,8 +40,7 @@ find_package(catkin REQUIRED COMPONENTS
 catkin_package(
   INCLUDE_DIRS include
   LIBRARIES 
-  CATKIN_DEPENDS alica_engine alica_ros_proxy stummel_expressions stummel_worldmodel 
-  #asp_commons asp_solver_wrapper asp_solver
+  CATKIN_DEPENDS alica_engine alica_ros_proxy stummel_expressions stummel_worldmodel asp_commons asp_solver_wrapper asp_solver
 #  DEPENDS tinyxml
 )
 
@@ -59,4 +56,4 @@ include_directories(include ${catkin_INCLUDE_DIRS})
 add_executable(stummel_base src/Base.cpp)
 
 ## Specify libraries to link a library or executable target against
-target_link_libraries(stummel_base ${catkin_LIBRARIES} )
+target_link_libraries(stummel_base ${catkin_LIBRARIES} clingo)
