@@ -183,10 +183,10 @@ catkin_build() {
 
 setup_clingo() {
     cd
-    git clone https://github.com/potassco/clingo.git
+    su cn -c "git clone https://github.com/potassco/clingo.git"
     cd clingo
-    git submodule update --init --recursive
-    mkdir build
+    su cn -c "git submodule update --init --recursive"
+    su cn -c "mkdir build"
     cd build
     su cn -c "cmake .."
     su cn -c "make"
