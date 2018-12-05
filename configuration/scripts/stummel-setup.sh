@@ -172,6 +172,10 @@ clone_git_repos() {
 		fi
 	done
 
+    msg "Checking out newPD branch for alica"
+
+	( cd ${workspace_src}/alica/ ; git checkout newPD )
+
 	msg "Cloning additional, hardcoded repos"
 
     if [ ! -d ${workspace_src}/velodyne_simulator ]; then
