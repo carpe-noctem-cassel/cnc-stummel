@@ -15,7 +15,7 @@ workspace_src="${workspace_path}/src"
 ros_setup_file="/opt/ros/${ros_distro}/setup.sh"
 github_url='git@github.com:dasys-lab/'
 repos='alica alica-plan-designer aspsuite alica-supplementary essentials cnc-stummel cnc-stummeldriver kinova-ros p2os'
-
+pwd="$PWD"
 
 # functions
 msg() {
@@ -202,6 +202,7 @@ setup_clingo() {
     make install
     cd
     rm -rf clingo
+    cd "$pwd"
 }
 
 setup_mr() {
