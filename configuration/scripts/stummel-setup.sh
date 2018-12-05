@@ -174,7 +174,9 @@ clone_git_repos() {
 
 	msg "Cloning additional, hardcoded repos"
 
-	git clone https://bitbucket.org/DataspeedInc/velodyne_simulator.git "${workspace_src}/velodyne_simulator"
+    if [ ! -d ${workspace_src}/velodyne_simulator ]; then
+	    git clone https://bitbucket.org/DataspeedInc/velodyne_simulator.git "${workspace_src}/velodyne_simulator"
+	fi
 }
 
 catkin_build() {
