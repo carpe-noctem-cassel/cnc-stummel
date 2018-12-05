@@ -172,10 +172,6 @@ clone_git_repos() {
 		fi
 	done
 
-	msg "Checking out stummel branch for supplementary"
-
-	( cd ${workspace_src}/supplementary/ ; git checkout Stummel-dev )
-
 	msg "Cloning additional, hardcoded repos"
 
 	git clone https://bitbucket.org/DataspeedInc/velodyne_simulator.git "${workspace_src}/velodyne_simulator"
