@@ -3,7 +3,7 @@
 set -e
 
 # vars
-step_count=11
+step_count=12
 current_step=0
 root_taskfile=.root_done
 ubuntu_packages='git vim gitk meld bison re2c libode-dev gnuplot-qt libxv-dev libtbb-dev libcgal-demo libcgal-dev xsdcxx libxerces-c-dev freeglut3-dev liblua5.1-0-dev scons myrepos openjdk-8-jdk libpcap-dev net-tools'
@@ -185,6 +185,20 @@ catkin_build() {
     ( cd "${workspace_path}" ; catkin build )
 }
 
+setup_clingo() {
+    cd
+    git clone https://github.com/potassco/clingo.git
+    cd clingo
+    git submodule update --init --recursive
+    mkdir build
+    cd build
+    su cn -c "cmake .."
+    su cn -c "make"
+    make install
+    cd
+    rm -rf clingo
+}
+
 setup_mr() {
 	for r in $repos
 	do
@@ -232,6 +246,7 @@ root_tasks() {
 	do_task install_packages "Install ros and development packages"
 	do_task rosdep_init "Running: rosdep init"
 	do_task linklocale "Linking /usr/include/xlocale.h"
+	do_task setup_clingo "Setting up clingo"
 }
 
 # This portion of the script can be run as a normal user
