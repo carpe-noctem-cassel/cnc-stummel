@@ -3,7 +3,7 @@
 set -e
 
 # vars
-step_count=11
+step_count=12
 current_step=0
 root_taskfile=.root_done
 ubuntu_packages='git vim gitk meld bison re2c libode-dev gnuplot-qt libxv-dev libtbb-dev libcgal-demo libcgal-dev xsdcxx libxerces-c-dev freeglut3-dev liblua5.1-0-dev scons myrepos openjdk-8-jdk libpcap-dev net-tools'
@@ -13,8 +13,9 @@ ros_packages="ros-${ros_distro}-perception ros-${ros_distro}-p2os-msgs ros-${ros
 workspace_path="$HOME/stummelws"
 workspace_src="${workspace_path}/src"
 ros_setup_file="/opt/ros/${ros_distro}/setup.sh"
-github_url='git@github.com:carpe-noctem-cassel/'
-repos='alica alica-plan-designer clingo supplementary cnc-stummel cnc-stummeldriver kinova-ros p2os'
+github_url='git@github.com:dasys-lab/'
+repos='alica alica-plan-designer aspsuite alica-supplementary essentials cnc-stummel cnc-stummeldriver kinova-ros p2os'
+pwd="$PWD"
 
 # functions
 msg() {
@@ -171,17 +172,37 @@ clone_git_repos() {
 		fi
 	done
 
-	msg "Checking out stummel branch for supplementary"
+    msg "Checking out newPD branch for alica"
+	( cd ${workspace_src}/alica/ ; git checkout newPD )
 
-	( cd ${workspace_src}/supplementary/ ; git checkout Stummel-dev )
+    msg "Checking out ttb_dev branch for essentials"
+	( cd ${workspace_src}/essentials/ ; git checkout ttb_dev )
 
 	msg "Cloning additional, hardcoded repos"
 
-	git clone https://bitbucket.org/DataspeedInc/velodyne_simulator.git "${workspace_src}/velodyne_simulator"
+    if [ ! -d ${workspace_src}/velodyne_simulator ]; then
+	    git clone https://bitbucket.org/DataspeedInc/velodyne_simulator.git "${workspace_src}/velodyne_simulator"
+	fi
 }
 
 catkin_build() {
     ( cd "${workspace_path}" ; catkin build )
+}
+
+# TODO check if this step can be skipped. currently, clingo will always be checked out, built and installed, ignoring previous installations.
+setup_clingo() {
+    cd
+    su cn -c "git clone https://github.com/potassco/clingo.git"
+    cd clingo
+    su cn -c "git submodule update --init --recursive"
+    su cn -c "mkdir build"
+    cd build
+    su cn -c "cmake .."
+    su cn -c "make"
+    make install
+    cd
+    rm -rf clingo
+    cd "$pwd"
 }
 
 setup_mr() {
@@ -231,6 +252,7 @@ root_tasks() {
 	do_task install_packages "Install ros and development packages"
 	do_task rosdep_init "Running: rosdep init"
 	do_task linklocale "Linking /usr/include/xlocale.h"
+	do_task setup_clingo "Setting up clingo"
 }
 
 # This portion of the script can be run as a normal user

@@ -1,22 +1,17 @@
 #include "Base.h"
 
+#include <clock/AlicaROSClock.h>
+#include <communication/AlicaRosCommunication.h>
+#include <asp_commons/IASPSolver.h>
+#include <asp_solver/ASPSolver.h>
+#include <asp_solver_wrapper/ASPSolverWrapper.h>
+
 #include <iostream>
 #include <thread>
 #include <chrono>
-#include "ros/ros.h"
-#include "clock/AlicaROSClock.h"
-#include "communication/AlicaRosCommunication.h"
-#include "SigFault.h"
 
-/*
- //#include "SolverType.h"
- #include <asp_commons/IASPSolver.h>
- #include <asp_solver_wrapper/ASPSolverWrapper.h>
- #include <asp_solver/ASPSolver.h>
- */
-using std::cout;
-using std::endl;
-using std::string;
+#include <ros/ros.h>
+
 
 namespace stummel {
 
@@ -40,15 +35,13 @@ Base::Base(string roleSetName, string masterPlanName, string roleSetDir,
 	}
 	wm->setEngine(ae);
 	wm->init();
-	// "clingo", "-W", "no-atom-undefined",  "--number=0", nullptr
 
-	/* TODO Lisa fix symrock
-	 std::vector<char const *> args {"clingo", nullptr};
-	 auto solver = new ::reasoner::ASPSolver(args);
-	 auto solverWrapper = new alica::reasoner::ASPSolverWrapper(ae, args);
-	 solverWrapper->init(solver);
-	 ae->addSolver(SolverType::ASPSOLVER, solverWrapper);
-	 */
+        auto solver = new ::reasoner::ASPSolver({});
+        auto solverWrapper = new alica::reasoner::ASPSolverWrapper(ae, {});
+        solverWrapper->init(solver);
+
+        ae->addSolver(solverWrapper);
+
 	ae->init(bc, cc, uc, crc);
 }
 
@@ -70,9 +63,9 @@ Base::~Base() {
 } /* namespace stummel */
 
 void printUsage() {
-	cout
+	std::cout
 			<< "Usage: ./msl_base -m \"Masterplan\" [-rd \"RoleSetDirectory\"] [-rset \"RoleSet\"]"
-			<< endl;
+			<< std::endl;
 }
 
 int main(int argc, char** argv) {
@@ -81,20 +74,18 @@ int main(int argc, char** argv) {
 		return 0;
 	}
 
-	cout << "Initialising ROS" << endl;
+	std::cout << "Initialising ROS" << std::endl;
 
 	ros::init(argc, argv,
 			supplementary::SystemConfig::getInstance()->getHostname()
 					+ "_Base");
 
-	//This makes segfaults to exceptions
-	segfaultdebug::init_segfault_exceptions();
 
-	cout << "Parsing command line parameters:" << endl;
+	std::cout << "Parsing command line parameters:" << std::endl;
 
-	string masterplan = "";
-	string rolesetdir = ".";
-	string roleset = "";
+	std::string masterplan = "";
+	std::string rolesetdir = ".";
+	std::string roleset = "";
 	bool sim = false;
 
 	for (int i = 1; i < argc; i++) {
@@ -121,15 +112,15 @@ int main(int argc, char** argv) {
 		printUsage();
 		return 0;
 	}
-	cout << "\tMasterplan is:       \"" << masterplan << "\"" << endl;
-	cout << "\tRolset Directory is: \"" << rolesetdir << "\"" << endl;
-	cout << "\tRolset is:           \""
+	std::cout << "\tMasterplan is:       \"" << masterplan << "\"" << std::endl;
+	std::cout << "\tRolset Directory is: \"" << rolesetdir << "\"" << std::endl;
+	std::cout << "\tRolset is:           \""
 			<< (roleset.empty() ? "Default" : roleset) << "\"" << endl;
 
-	cout << "\nConstructing Base ..." << endl;
+	std::cout << "\nConstructing Base ..." << std::endl;
 	stummel::Base* base = new stummel::Base(roleset, masterplan, rolesetdir,sim);
 
-	cout << "\nStarting Base ..." << endl;
+	std::cout << "\nStarting Base ..." << std::endl;
 	base->start();
 
 	while (ros::ok()) {
