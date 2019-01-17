@@ -2,8 +2,7 @@
 
 #include <clock/AlicaROSClock.h>
 #include <communication/AlicaRosCommunication.h>
-#include <asp_commons/IASPSolver.h>
-#include <asp_solver/ASPSolver.h>
+#include <reasoner/asp/Solver.h>
 #include <asp_solver_wrapper/ASPSolverWrapper.h>
 
 #include <iostream>
@@ -36,7 +35,7 @@ Base::Base(string roleSetName, string masterPlanName, string roleSetDir,
 	wm->setEngine(ae);
 	wm->init();
 
-        auto solver = new ::reasoner::ASPSolver({});
+        auto solver = new ::reasoner::asp::Solver({});
         auto solverWrapper = new alica::reasoner::ASPSolverWrapper(ae, {});
         solverWrapper->init(solver);
 
