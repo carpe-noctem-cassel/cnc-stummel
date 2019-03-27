@@ -1,12 +1,13 @@
 #include "DomainBehaviour.h"
 #include <engine/AlicaEngine.h>
+#include <SystemConfig.h>
 using std::string;
 
 namespace alica {
 DomainBehaviour::DomainBehaviour(std::string name) :
 		BasicBehaviour(name) {
 
-	this->sc = supplementary::SystemConfig::getInstance();
+	this->sc = essentials::SystemConfig::getInstance();
 
 	// usefull stuff for general stummel behaviour programming
 	this->ownID = sc->getOwnRobotID();

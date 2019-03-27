@@ -6,7 +6,7 @@
 #include "stummel/wm/RawSensorData.h"
 #include <geometry_msgs/Twist.h>
 #include <ros/ros.h>
-namespace supplementary {
+namespace essentials {
 	class SystemConfig;
 }
 namespace alica
@@ -22,7 +22,7 @@ namespace alica
 
     protected:
 
-        supplementary::SystemConfig* sc;
+        essentials::SystemConfig* sc;
 
     private:
         int ownID;
