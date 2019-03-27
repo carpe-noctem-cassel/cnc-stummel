@@ -2,8 +2,8 @@
 
 #include "stummel/StummelWorldModel.h"
 
-#include <supplementary/AgentID.h>
-#include <supplementary/BroadcastID.h>
+#include <essentials/AgentID.h>
+#include <essentials/BroadcastID.h>
 
 using std::string;
 

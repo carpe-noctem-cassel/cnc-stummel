@@ -3,7 +3,7 @@
 #include "wm/RawSensorData.h"
 #include "wm/Communication.h"
 #include <SystemConfig.h>
-#include <supplementary/EventTrigger.h>
+#include <essentials/EventTrigger.h>
 #include <supplementary/WorldModel.h>
 #include <supplementary/InformationElement.h>
 namespace supplementary

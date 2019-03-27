@@ -17,8 +17,8 @@ namespace stummel {
 Base::Base(string roleSetName, string masterPlanName, string roleSetDir,
 		bool sim) {
 	ae = new alica::AlicaEngine(
-			new supplementary::AgentIDManager(
-					new supplementary::AgentIDFactory()), roleSetName,
+			new essentials::AgentIDManager(
+					new essentials::AgentIDFactory()), roleSetName,
 			masterPlanName, false);
 	bc = new alica::BehaviourCreator();
 	cc = new alica::ConditionCreator();
@@ -76,7 +76,7 @@ int main(int argc, char** argv) {
 	std::cout << "Initialising ROS" << std::endl;
 
 	ros::init(argc, argv,
-			supplementary::SystemConfig::getInstance()->getHostname()
+			essentials::SystemConfig::getInstance()->getHostname()
 					+ "_Base");
 
 
