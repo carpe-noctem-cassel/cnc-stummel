@@ -12,6 +12,8 @@
 #include "geometry_msgs/PoseStamped.h"
 #include "geometry_msgs/PoseWithCovarianceStamped.h"
 #include "nav_msgs/Path.h"
+#include "nav_msgs/OccupancyGrid.h"
+#include "nav_msgs/OccupancyGrid.h"
 
 namespace ttb {
     class WrappedMessageHandler {
@@ -30,6 +32,8 @@ ros::Publisher pub2852345798;
 ros::Publisher pub3037331423;
 ros::Publisher pub2637701444;
 ros::Publisher pub1785548406;
+ros::Publisher pub1770524330;
+ros::Publisher pub3059823760;
 void onRosPlanTreeInfo3767756765(const ros::MessageEvent<alica_msgs::PlanTreeInfo>& event) {
 	if(0 == event.getPublisherName().compare(ownRosName)) return;
 uint8_t* buffer = NULL;
@@ -183,6 +187,40 @@ uint8_t* buffer = NULL;
 	}
 	if(buffer!=NULL) delete[] buffer;
 }
+void onRosOccupancyGrid1770524330(const ros::MessageEvent<nav_msgs::OccupancyGrid>& event) {
+	if(0 == event.getPublisherName().compare(ownRosName)) return;
+uint8_t* buffer = NULL;
+	const nav_msgs::OccupancyGrid::ConstPtr& message = event.getMessage();
+	try{
+		uint32_t serial_size = ros::serialization::serializationLength(*message);
+		buffer = new uint8_t[serial_size+sizeof(uint32_t)];
+		ros::serialization::OStream stream(buffer+sizeof(uint32_t), serial_size);
+		*((uint32_t*)buffer) = 1770524330u;
+		ros::serialization::serialize(stream, *message);
+		// write message to UDP
+		insocket->send_to(boost::asio::buffer((void*)buffer,serial_size+sizeof(uint32_t)),destEndPoint);
+	} catch(std::exception& e) {
+		ROS_ERROR_STREAM_THROTTLE(2,"Exception while sending UDP message:"<<e.what()<< " Discarding message!");
+	}
+	if(buffer!=NULL) delete[] buffer;
+}
+void onRosOccupancyGrid3059823760(const ros::MessageEvent<nav_msgs::OccupancyGrid>& event) {
+	if(0 == event.getPublisherName().compare(ownRosName)) return;
+uint8_t* buffer = NULL;
+	const nav_msgs::OccupancyGrid::ConstPtr& message = event.getMessage();
+	try{
+		uint32_t serial_size = ros::serialization::serializationLength(*message);
+		buffer = new uint8_t[serial_size+sizeof(uint32_t)];
+		ros::serialization::OStream stream(buffer+sizeof(uint32_t), serial_size);
+		*((uint32_t*)buffer) = 3059823760u;
+		ros::serialization::serialize(stream, *message);
+		// write message to UDP
+		insocket->send_to(boost::asio::buffer((void*)buffer,serial_size+sizeof(uint32_t)),destEndPoint);
+	} catch(std::exception& e) {
+		ROS_ERROR_STREAM_THROTTLE(2,"Exception while sending UDP message:"<<e.what()<< " Discarding message!");
+	}
+	if(buffer!=NULL) delete[] buffer;
+}
 
         void init(int& id) {
             this->robotID = id;
@@ -196,6 +234,8 @@ ros::Subscriber sub5 = n.subscribe("/amcl_pose",5, onRosPoseWithCovarianceStampe
 ros::Subscriber sub6 = n.subscribe("/move_base_simple/goal",5, onRosPoseStamped3037331423,ros::TransportHints().unreliable().tcpNoDelay().reliable());
 ros::Subscriber sub7 = n.subscribe("/initialpose",5, onRosPoseWithCovarianceStamped2637701444,ros::TransportHints().unreliable().tcpNoDelay().reliable());
 ros::Subscriber sub8 = n.subscribe("/move_base/NavfnROS/plan",5, onRosPath1785548406,ros::TransportHints().unreliable().tcpNoDelay().reliable());
+ros::Subscriber sub9 = n.subscribe("/move_base/local_costmap/costmap",5, onRosOccupancyGrid1770524330,ros::TransportHints().unreliable().tcpNoDelay().reliable());
+ros::Subscriber sub10 = n.subscribe("/move_base/global_costmap/costmap",5, onRosOccupancyGrid3059823760,ros::TransportHints().unreliable().tcpNoDelay().reliable());
 
 pub3767756765 = n.advertise<alica_msgs::PlanTreeInfo>("/AlicaEngine/PlanTreeInfo",5,false);
 pub3108117629 = n.advertise<process_manager::ProcessCommand>("/process_manager/ProcessCommand",5,false);
@@ -206,6 +246,8 @@ pub2852345798 = n.advertise<geometry_msgs::PoseWithCovarianceStamped>("/amcl_pos
 pub3037331423 = n.advertise<geometry_msgs::PoseStamped>("/move_base_simple/goal",5,false);
 pub2637701444 = n.advertise<geometry_msgs::PoseWithCovarianceStamped>("/initialpose",5,false);
 pub1785548406 = n.advertise<nav_msgs::Path>("/move_base/NavfnROS/plan",5,false);
+pub1770524330 = n.advertise<nav_msgs::OccupancyGrid>("/move_base/local_costmap/costmap",5,false);
+pub3059823760 = n.advertise<nav_msgs::OccupancyGrid>("/move_base/global_costmap/costmap",5,false);
 
             // wrappedMessagesSubscribers.push_back(nh.subscribe("/wrapped", 10,
             // &WrappedMessageHandler::onWrappedMessage, (TTBWorldModel*)those));
