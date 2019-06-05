@@ -16,11 +16,8 @@ namespace stummel {
 
 Base::Base(string roleSetName, string masterPlanName, string roleSetDir,
 		bool sim) {
-	ae = new alica::AlicaEngine(
-			new essentials::AgentIDManager(
-					new essentials::AgentIDFactory()), roleSetName,
-			masterPlanName, false);
-	bc = new alica::BehaviourCreator();
+    ae = new alica::AlicaEngine(new essentials::IDManager(), roleSetName, masterPlanName, false);
+    bc = new alica::BehaviourCreator();
 	cc = new alica::ConditionCreator();
 	uc = new alica::UtilityFunctionCreator();
 	crc = new alica::ConstraintCreator();
