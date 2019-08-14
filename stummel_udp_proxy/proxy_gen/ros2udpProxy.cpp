@@ -163,7 +163,6 @@ uint8_t* buffer = NULL;
 	if(buffer!=NULL) delete[] buffer;
 }
 void onRosPoseWithCovarianceStamped2637701444(const ros::MessageEvent<geometry_msgs::PoseWithCovarianceStamped>& event) {
-    std::cout << "bla bla bla" << std::endl;
 	if(0 == event.getPublisherName().compare(ownRosName)) return;
 uint8_t* buffer = NULL;
 	const geometry_msgs::PoseWithCovarianceStamped::ConstPtr& message = event.getMessage();
@@ -283,7 +282,6 @@ case 2637701444ul: {
 geometry_msgs::PoseWithCovarianceStamped m2637701444;
 ros::serialization::Serializer<geometry_msgs::PoseWithCovarianceStamped>::read(stream, m2637701444);
 pub2637701444.publish<geometry_msgs::PoseWithCovarianceStamped>(m2637701444);
-std::cout << "blubb blubb blubb" << std::endl;
 break; }
 case 1785548406ul: {
 nav_msgs::Path m1785548406;
