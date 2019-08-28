@@ -28,7 +28,6 @@
 #include "geometry_msgs/PoseStamped.h"
 #include "geometry_msgs/PoseWithCovarianceStamped.h"
 #include "nav_msgs/Path.h"
-#include "sensor_msgs/LaserScan.h"
 
 using namespace essentials;
 
@@ -196,23 +195,6 @@ uint8_t* buffer = NULL;
 	}
 	if(buffer!=NULL) delete[] buffer;
 }
-void onRosLaserScan715375972(const ros::MessageEvent<sensor_msgs::LaserScan>& event) {
-	if(0 == event.getPublisherName().compare(ownRosName)) return;
-uint8_t* buffer = NULL;
-	const sensor_msgs::LaserScan::ConstPtr& message = event.getMessage();
-	try{
-		uint32_t serial_size = ros::serialization::serializationLength(*message);
-		buffer = new uint8_t[serial_size+sizeof(uint32_t)];
-		ros::serialization::OStream stream(buffer+sizeof(uint32_t), serial_size);
-		*((uint32_t*)buffer) = 715375972u;
-		ros::serialization::serialize(stream, *message);
-		// write message to UDP
-		insocket->send_to(boost::asio::buffer((void*)buffer,serial_size+sizeof(uint32_t)),destEndPoint);
-	} catch(std::exception& e) {
-		ROS_ERROR_STREAM_THROTTLE(2,"Exception while sending UDP message:"<<e.what()<< " Discarding message!");
-	}
-	if(buffer!=NULL) delete[] buffer;
-}
 
 ros::Publisher pub3767756765;
 ros::Publisher pub3108117629;
@@ -223,7 +205,6 @@ ros::Publisher pub2852345798;
 ros::Publisher pub3037331423;
 ros::Publisher pub2637701444;
 ros::Publisher pub1785548406;
-ros::Publisher pub715375972;
 
 boost::array<char, 64000> inBuffer;
 void listenForPacket() {
@@ -288,11 +269,6 @@ nav_msgs::Path m1785548406;
 ros::serialization::Serializer<nav_msgs::Path>::read(stream, m1785548406);
 pub1785548406.publish<nav_msgs::Path>(m1785548406);
 break; }
-case 715375972ul: {
-sensor_msgs::LaserScan m715375972;
-ros::serialization::Serializer<sensor_msgs::LaserScan>::read(stream, m715375972);
-pub715375972.publish<sensor_msgs::LaserScan>(m715375972);
-break; }
                 default: std::cerr << "Cannot find Matching topic:" << id << std::endl;
             }
         } catch (std::exception& e) {
@@ -352,7 +328,6 @@ ros::Subscriber sub5 = n.subscribe("/amcl_pose",5, onRosPoseWithCovarianceStampe
 ros::Subscriber sub6 = n.subscribe("/move_base_simple/goal",5, onRosPoseStamped3037331423,ros::TransportHints().unreliable().tcpNoDelay().reliable());
 ros::Subscriber sub7 = n.subscribe("/initialpose",5, onRosPoseWithCovarianceStamped2637701444,ros::TransportHints().unreliable().tcpNoDelay().reliable());
 ros::Subscriber sub8 = n.subscribe("/move_base/NavfnROS/plan",5, onRosPath1785548406,ros::TransportHints().unreliable().tcpNoDelay().reliable());
-ros::Subscriber sub9 = n.subscribe("/scan",5, onRosLaserScan715375972,ros::TransportHints().unreliable().tcpNoDelay().reliable());
 
 pub3767756765 = n.advertise<alica_msgs::PlanTreeInfo>("/AlicaEngine/PlanTreeInfo",5,false);
 pub3108117629 = n.advertise<process_manager::ProcessCommand>("/process_manager/ProcessCommand",5,false);
@@ -363,7 +338,6 @@ pub2852345798 = n.advertise<geometry_msgs::PoseWithCovarianceStamped>("/amcl_pos
 pub3037331423 = n.advertise<geometry_msgs::PoseStamped>("/move_base_simple/goal",5,false);
 pub2637701444 = n.advertise<geometry_msgs::PoseWithCovarianceStamped>("/initialpose",5,false);
 pub1785548406 = n.advertise<nav_msgs::Path>("/move_base/NavfnROS/plan",5,false);
-pub715375972 = n.advertise<sensor_msgs::LaserScan>("/scan",5,false);
 
     boost::thread iothread(run);
 

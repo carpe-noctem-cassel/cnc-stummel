@@ -2,9 +2,8 @@
 
 #include <clock/AlicaROSClock.h>
 #include <communication/AlicaRosCommunication.h>
-#include <reasoner/asp/Solver.h>
 #include <asp_solver_wrapper/ASPSolverWrapper.h>
-
+#include <reasoner/asp/Solver.h>
 #include <iostream>
 #include <thread>
 #include <chrono>

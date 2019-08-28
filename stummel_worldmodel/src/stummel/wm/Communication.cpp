@@ -2,7 +2,7 @@
 
 #include "stummel/StummelWorldModel.h"
 
-#include <essentials/ID.h>
+#include <essentials/IDManager.h>
 #include <essentials/WildcardID.h>
 
 using std::string;
