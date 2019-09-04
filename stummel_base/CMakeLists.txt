@@ -25,6 +25,7 @@ find_package(catkin REQUIRED COMPONENTS
   tf 
   asp_solver_wrapper
   asp_solver
+  id_ros
 )
 
 ###################################
@@ -39,7 +40,7 @@ find_package(catkin REQUIRED COMPONENTS
 catkin_package(
   INCLUDE_DIRS include
   LIBRARIES 
-  CATKIN_DEPENDS alica_engine alica_ros_proxy stummel_expressions stummel_worldmodel asp_solver_wrapper asp_solver
+  CATKIN_DEPENDS alica_engine alica_ros_proxy stummel_expressions stummel_worldmodel asp_solver_wrapper asp_solver id_ros
 #  DEPENDS tinyxml
 )
 

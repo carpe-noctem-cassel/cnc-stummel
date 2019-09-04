@@ -23,7 +23,7 @@ add_library(stummel_worldmodel
   src/stummel/wm/Communication.cpp
 )
 
-add_dependencies(stummel_worldmodel geometry_msgs_generate_messages_cpp robot_control_generate_messages_cpp) 
+add_dependencies(stummel_worldmodel geometry_msgs_generate_messages_cpp robot_control_generate_messages_cpp)
 
 target_link_libraries(stummel_worldmodel
   ${catkin_LIBRARIES} 

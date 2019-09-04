@@ -2,9 +2,8 @@
 
 #include <clock/AlicaROSClock.h>
 #include <communication/AlicaRosCommunication.h>
-#include <reasoner/asp/Solver.h>
 #include <asp_solver_wrapper/ASPSolverWrapper.h>
-
+#include <reasoner/asp/Solver.h>
 #include <iostream>
 #include <thread>
 #include <chrono>
@@ -16,11 +15,8 @@ namespace stummel {
 
 Base::Base(string roleSetName, string masterPlanName, string roleSetDir,
 		bool sim) {
-	ae = new alica::AlicaEngine(
-			new essentials::AgentIDManager(
-					new essentials::AgentIDFactory()), roleSetName,
-			masterPlanName, false);
-	bc = new alica::BehaviourCreator();
+    ae = new alica::AlicaEngine(new essentials::IDManager(), roleSetName, masterPlanName, false);
+    bc = new alica::BehaviourCreator();
 	cc = new alica::ConditionCreator();
 	uc = new alica::UtilityFunctionCreator();
 	crc = new alica::ConstraintCreator();
