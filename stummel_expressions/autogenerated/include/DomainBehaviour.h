@@ -6,33 +6,30 @@
 #include "stummel/wm/RawSensorData.h"
 #include <geometry_msgs/Twist.h>
 #include <ros/ros.h>
-namespace essentials {
-	class SystemConfig;
+namespace essentials
+{
+class SystemConfig;
 }
 namespace alica
 {
 
-    class DomainBehaviour : public BasicBehaviour
-    {
-    public:
-        DomainBehaviour(std::string name);
-        virtual ~DomainBehaviour();
-        void send(geometry_msgs::Twist& tw);
-        stummel::StummelWorldModel* wm;
+class DomainBehaviour : public BasicBehaviour
+{
+  public:
+    DomainBehaviour(std::string name);
+    virtual ~DomainBehaviour();
+    void send(geometry_msgs::Twist &tw);
+    stummel::StummelWorldModel *wm;
 
-    protected:
+  protected:
+    essentials::SystemConfig *sc;
 
-        essentials::SystemConfig* sc;
+  private:
+    int ownID;
 
-    private:
-        int ownID;
-
-
-        ros::Publisher twistPub;
-        std::string motionTopic;
-
-    };
+    ros::Publisher twistPub;
+    std::string motionTopic;
+};
 } /* namespace alica */
 
 #endif /* DomainBehaviour_H_ */
-

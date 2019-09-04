@@ -3,40 +3,36 @@ using namespace std;
 #include "BehaviourCreator.h"
 #include "engine/BasicBehaviour.h"
 
-#include  "Plans/Explore.h"
+#include "Plans/Explore.h"
 
-#include  "Plans/Joystick.h"
+#include "Plans/Joystick.h"
 
 namespace alica
 {
 
-    BehaviourCreator::BehaviourCreator()
+BehaviourCreator::BehaviourCreator() {}
+
+BehaviourCreator::~BehaviourCreator() {}
+
+shared_ptr<BasicBehaviour> BehaviourCreator::createBehaviour(long behaviourConfId)
+{
+    switch (behaviourConfId)
     {
-    }
 
-    BehaviourCreator::~BehaviourCreator()
-    {
-    }
+    case 1530109188933:
 
-    shared_ptr<BasicBehaviour> BehaviourCreator::createBehaviour(long behaviourConfId)
-    {
-        switch (behaviourConfId)
-        {
+        return make_shared<Explore>();
+        break;
 
-            case 1530109188933:
+    case 1531320972586:
 
-                return make_shared<Explore>();
-                break;
+        return make_shared<Joystick>();
+        break;
 
-            case 1531320972586:
-
-                return make_shared<Joystick>();
-                break;
-
-            default:
-                cerr << "BehaviourCreator: Unknown behaviour requested: " << behaviourConfId << endl;
-                throw new exception();
-                break;
-        }
+    default:
+        cerr << "BehaviourCreator: Unknown behaviour requested: " << behaviourConfId << endl;
+        throw new exception();
+        break;
     }
 }
+} // namespace alica
