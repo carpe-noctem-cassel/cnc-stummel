@@ -18,7 +18,6 @@
     <build_depend>cnc_geometry</build_depend>
     <build_depend>geometry_msgs</build_depend>
     <build_depend>event_handling</build_depend>
-    <build_depend>robot_control</build_depend>
     <build_depend>tf</build_depend>
     <build_depend>world_model</build_depend>
     <build_depend>p2os_msgs</build_depend>
@@ -29,7 +28,6 @@
     <run_depend>cnc_geometry</run_depend>
     <run_depend>geometry_msgs</run_depend>
     <run_depend>event_handling</run_depend>
-    <run_depend>robot_control</run_depend>
     <run_depend>tf</run_depend>
     <run_depend>world_model</run_depend>
     <run_depend>p2os_msgs</run_depend>

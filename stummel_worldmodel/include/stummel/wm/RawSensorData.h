@@ -23,11 +23,6 @@ namespace nav_msgs
 ROS_DECLARE_MESSAGE(Odometry)
 }
 
-namespace robot_control
-{
-ROS_DECLARE_MESSAGE(RobotCommand)
-}
-
 namespace gazebo_msgs
 {
 ROS_DECLARE_MESSAGE(ModelStates)

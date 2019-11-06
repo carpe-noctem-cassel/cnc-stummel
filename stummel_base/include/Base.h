@@ -21,12 +21,12 @@ class Base
 
     void start();
 
-    alica::AlicaEngine *ae;
-    alica::BehaviourCreator *bc;
-    alica::ConditionCreator *cc;
-    alica::UtilityFunctionCreator *uc;
-    alica::ConstraintCreator *crc;
-    StummelWorldModel *wm;
+    alica::AlicaEngine *alicaEngine;
+    alica::BehaviourCreator *behaviourCreator;
+    alica::ConditionCreator *conditionCreator;
+    alica::UtilityFunctionCreator *utilityFunctionCreator;
+    alica::ConstraintCreator *constraintCreator;
+    StummelWorldModel *worldModel;
 
   protected:
 };

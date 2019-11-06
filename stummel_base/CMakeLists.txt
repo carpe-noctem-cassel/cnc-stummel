@@ -21,7 +21,6 @@ find_package(catkin REQUIRED COMPONENTS
         alica_ros_proxy
         stummel_expressions
         stummel_worldmodel
-        robot_control
         tf
         asp_solver_wrapper
         asp_solver

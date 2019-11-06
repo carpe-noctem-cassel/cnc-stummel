@@ -1,0 +1,12 @@
+{
+  "id" : 1570633306316,
+  "name" : "taskr",
+  "comment" : "",
+  "relativeDirectory" : "",
+  "tasks" : [ {
+    "id" : 1570633373655,
+    "name" : "Default",
+    "comment" : "",
+    "taskRepository" : 1570633306316
+  } ]
+}

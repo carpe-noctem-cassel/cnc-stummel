@@ -9,7 +9,6 @@
 #include <geometry_msgs/Twist.h>
 #include <nav_msgs/Odometry.h>
 #include <p2os_msgs/BatteryState.h>
-#include <robot_control/RobotCommand.h>
 #include <sensor_msgs/Joy.h>
 #include <sensor_msgs/LaserScan.h>
 #include <tf/transform_listener.h>

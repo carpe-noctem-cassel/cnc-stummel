@@ -4,7 +4,6 @@
 
 #include <SystemConfig.h>
 #include <engine/AlicaClock.h>
-#include <robot_control/RobotCommand.h>
 
 #include <exception>
 #include <iostream>
