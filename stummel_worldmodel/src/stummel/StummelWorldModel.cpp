@@ -11,34 +11,33 @@ StummelWorldModel *StummelWorldModel::get()
     return &instance;
 }
 
-StummelWorldModel::StummelWorldModel() :
-		WorldModel()
+StummelWorldModel::StummelWorldModel()
+    : WorldModel()
     , rawSensorData(this)
-	, usingSimulator(false)
-	, communication(nullptr)
+    , usingSimulator(false)
+    , communication(nullptr)
 {
-	this->robotName = sc->getHostname();
+    this->robotName = sc->getHostname();
 }
 
 StummelWorldModel::~StummelWorldModel()
 {
-	delete this->communication;
+    delete this->communication;
 }
 
 std::string StummelWorldModel::getRobotName()
 {
-	return this->robotName;
+    return this->robotName;
 }
 
 void StummelWorldModel::init()
 {
-	this->communication = new wm::Communication(this);
-
+    this->communication = new wm::Communication(this);
 }
 
 bool StummelWorldModel::isUsingSimulator()
 {
-	return this->usingSimulator || (this->communication != nullptr && this->communication->getTimeLastSimMsgReceived() > alica::AlicaTime::zero());
+    return this->usingSimulator || (this->communication != nullptr && this->communication->getTimeLastSimMsgReceived() > alica::AlicaTime::zero());
 }
 
 void StummelWorldModel::setUsingSimulator(bool usingSimulator)
@@ -47,4 +46,3 @@ void StummelWorldModel::setUsingSimulator(bool usingSimulator)
 }
 
 } /* namespace stummel */
-

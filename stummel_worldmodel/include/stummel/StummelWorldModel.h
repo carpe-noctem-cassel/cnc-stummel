@@ -1,11 +1,11 @@
 #pragma once
 
-#include "wm/RawSensorData.h"
 #include "wm/Communication.h"
+#include "wm/RawSensorData.h"
 #include <SystemConfig.h>
 #include <essentials/EventTrigger.h>
-#include <supplementary/WorldModel.h>
 #include <supplementary/InformationElement.h>
+#include <supplementary/WorldModel.h>
 namespace supplementary
 {
 class SystemConfig;
@@ -15,14 +15,15 @@ namespace alica
 {
 class AlicaEngine;
 class AlicaClock;
-}
+} // namespace alica
 
 namespace stummel
 {
-namespace wm {
+namespace wm
+{
 class RawSensorData;
 class Communication;
-}
+} // namespace wm
 
 class StummelWorldModel : public supplementary::WorldModel
 {
@@ -37,7 +38,7 @@ class StummelWorldModel : public supplementary::WorldModel
 
     // Public Data Access Classes
     wm::RawSensorData rawSensorData;
-    wm::Communication* communication;
+    wm::Communication *communication;
 
   private:
     StummelWorldModel(); /**< Private Singleton Constructor */
@@ -47,4 +48,3 @@ class StummelWorldModel : public supplementary::WorldModel
 };
 
 } /* namespace stummel */
-

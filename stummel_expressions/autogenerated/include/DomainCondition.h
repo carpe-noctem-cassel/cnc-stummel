@@ -1,17 +1,34 @@
-#ifndef DomainBehaviour_H_
-#define DomainBehaviour_H_
+#pragma once
 
-#include "engine/BasicCondition.h"
+#include <engine/BasicCondition.h>
+/*PROTECTED REGION ID(domainHeaderAdditional) ENABLED START*/
+// Addadditionaloptionshere
+/*PROTECTED REGION END*/
 
 namespace alica
 {
     class DomainCondition : public BasicCondition
     {
-    public:
+        public:
         DomainCondition();
         virtual ~DomainCondition();
+
+        /*PROTECTED REGION ID(domainHeader) ENABLED START*/
+  // Addadditionaloptionshere
+
+
+        /*PROTECTED REGION END*/
+
+protected:
+                /*PROTECTED REGION ID(protectedDomainHeader) ENABLED START*/
+  // Addadditionaloptionshere
+
+
+        /*PROTECTED REGION END*/
+
+private:
+                /*PROTECTED REGION ID(privateDomainHeader) ENABLED START*/
+  // Addadditionaloptionshere
+        /*PROTECTED REGION END*/
     };
 } /* namespace alica */
-
-#endif /* DomainBehaviour_H_ */
-

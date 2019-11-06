@@ -10,23 +10,22 @@ set(CMAKE_CXX_FLAGS "-rdynamic -g -fnon-call-exceptions -ggdb ${CMAKE_CXX_FLAGS}
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
-find_package(catkin REQUIRED COMPONENTS 
-  roscpp 
-  system_config 
-  system_util 
-  fsystem 
-  autodiff 
-  event_handling 
-  alica_engine 
-  alica_ros_proxy 
-  stummel_expressions 
-  stummel_worldmodel
-  robot_control 
-  tf 
-  asp_solver_wrapper
-  asp_solver
-  id_ros
-)
+find_package(catkin REQUIRED COMPONENTS
+        roscpp
+        system_config
+        system_util
+        fsystem
+        autodiff
+        event_handling
+        alica_engine
+        alica_ros_proxy
+        stummel_expressions
+        stummel_worldmodel
+        tf
+        asp_solver_wrapper
+        asp_solver
+        id_ros
+        )
 
 ###################################
 ## catkin specific configuration ##
@@ -38,10 +37,10 @@ find_package(catkin REQUIRED COMPONENTS
 ## CATKIN_DEPENDS: catkin_packages dependent projects also need
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
-  INCLUDE_DIRS include
-  LIBRARIES 
-  CATKIN_DEPENDS alica_engine alica_ros_proxy stummel_expressions stummel_worldmodel asp_solver_wrapper asp_solver id_ros
-#  DEPENDS tinyxml
+        INCLUDE_DIRS include
+        LIBRARIES
+        CATKIN_DEPENDS alica_engine alica_ros_proxy stummel_expressions stummel_worldmodel asp_solver_wrapper asp_solver id_ros
+        #  DEPENDS tinyxml
 )
 
 ###########

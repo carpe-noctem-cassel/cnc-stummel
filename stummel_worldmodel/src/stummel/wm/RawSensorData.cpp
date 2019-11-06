@@ -3,7 +3,6 @@
 #include "stummel/StummelWorldModel.h"
 
 #include <SystemConfig.h>
-#include <robot_control/RobotCommand.h>
 #include <engine/AlicaClock.h>
 
 #include <exception>
@@ -12,15 +11,18 @@
 #include <memory>
 #include <utility>
 
-using supplementary::InformationElement;
-using supplementary::InfoBuffer;
 using std::make_shared;
 using std::shared_ptr;
+using supplementary::InfoBuffer;
+using supplementary::InformationElement;
 
-namespace stummel {
-namespace wm {
+namespace stummel
+{
+namespace wm
+{
 
-RawSensorData::RawSensorData(StummelWorldModel *wm) {
+RawSensorData::RawSensorData(StummelWorldModel *wm)
+{
     this->wm = wm;
     auto sc = this->wm->getSystemConfig();
     this->maxValidity = alica::AlicaTime::nanoseconds(1000000000);
@@ -31,19 +33,16 @@ RawSensorData::RawSensorData(StummelWorldModel *wm) {
     this->joyBuffer = new InfoBuffer<sensor_msgs::Joy>((*sc)["StummelWorldModel"]->get<int>("Data.Joystick.BufferLength", NULL));
     this->odomBuffer = new InfoBuffer<nav_msgs::Odometry>((*sc)["StummelWorldModel"]->get<int>("Data.OdomPosition.BufferLength", NULL));
 
-	// real robot data buffers
+    // real robot data buffers
     this->batteryVoltageValidityDuration = alica::AlicaTime::nanoseconds((*sc)["StummelWorldModel"]->get<int>("Data.BatteryVoltage.ValidityDuration", NULL));
     this->batteryVoltageBuffer = new InfoBuffer<p2os_msgs::BatteryState>((*sc)["StummelWorldModel"]->get<int>("Data.BatteryVoltage.BufferLength", NULL));
 
-	// simulation data buffers
+    // simulation data buffers
     this->modelStatesValidityDuration = alica::AlicaTime::nanoseconds((*sc)["StummelWorldModel"]->get<int>("Data.OdomPosition.ValidityDuration", NULL));
     this->modelStatesBuffer = new InfoBuffer<gazebo_msgs::ModelStates>((*sc)["StummelWorldModel"]->get<int>("Data.GazeboModelStates.BufferLength", NULL));
-
-
 }
 
-RawSensorData::~RawSensorData() {
-}
+RawSensorData::~RawSensorData() {}
 
 void RawSensorData::processJoyMsg(sensor_msgs::JoyPtr joyMsg)
 {
@@ -66,36 +65,35 @@ void RawSensorData::processGazeboModelState(gazebo_msgs::ModelStatesPtr modelSta
 
 void RawSensorData::processBatteryVoltageMsg(p2os_msgs::BatteryStatePtr batteryVoltageMsg)
 {
-    auto batteryInfo = std::make_shared<InformationElement<p2os_msgs::BatteryState>>(*(batteryVoltageMsg.get()), wm->getTime(), this->joystickValidityDuration, 1.0);
+    auto batteryInfo =
+        std::make_shared<InformationElement<p2os_msgs::BatteryState>>(*(batteryVoltageMsg.get()), wm->getTime(), this->joystickValidityDuration, 1.0);
     batteryVoltageBuffer->add(batteryInfo);
 }
 
 //
-//const supplementary::InfoBuffer<std::shared_ptr<sensor_msgs::LaserScan>> *RawSensorData::getLaserScanBuffer()
+// const supplementary::InfoBuffer<std::shared_ptr<sensor_msgs::LaserScan>> *RawSensorData::getLaserScanBuffer()
 //{
 //    return this->laserScanBuffer;
 //}
 //
 const supplementary::InfoBuffer<gazebo_msgs::ModelStates> *RawSensorData::getGazeboModelStatesBuffer()
 {
-	return this->modelStatesBuffer;
+    return this->modelStatesBuffer;
 }
 const supplementary::InfoBuffer<sensor_msgs::Joy> *RawSensorData::getJoyMsgBuffer()
 {
-	return this->joyBuffer;
+    return this->joyBuffer;
 }
 
 const supplementary::InfoBuffer<nav_msgs::Odometry> *RawSensorData::getOdomMsgBuffer()
 {
-	return this->odomBuffer;
+    return this->odomBuffer;
 }
 
 const supplementary::InfoBuffer<p2os_msgs::BatteryState> *RawSensorData::getBatteryVoltageBuffer()
 {
-	return this->batteryVoltageBuffer;
+    return this->batteryVoltageBuffer;
 }
 
-
-
-}
+} // namespace wm
 } /* namespace stummel */

@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="ASCII"?>
-<alica:RoleSet xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:alica="http:///de.uni_kassel.vs.cn" id="1530111742516" name="Roleset.rset" comment="" usableWithPlanID="1530108941003" default="false">
-  <mappings id="1530111742517" name="MISSING_NAME" comment="">
-    <taskPriorities id="1530111742518" name="MISSING_NAME" comment="" key="1530108977106" value="0.5"/>
-    <role>rolesDefinition.rdefset#1530108763872</role>
-  </mappings>
-</alica:RoleSet>
